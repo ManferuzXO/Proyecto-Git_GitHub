@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git & GitHub — Guía Completa</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">git<span>://</span>learn</div>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#intro" class="nav-link-item">Intro</a></li>
+    <li><a href="#flujo" class="nav-link-item">Flujo</a></li>
+    <li><a href="#comandos" class="nav-link-item">Comandos</a></li>
+    <li><a href="#ramas" class="nav-link-item">Ramas</a></li>
+    <li><a href="#colaboracion" class="nav-link-item">Colaboración</a></li>
+    <li><a href="#terminal" class="nav-link-item">Terminal</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Control de versiones moderno</div>
+    <h1 class="hero-title">
+      <span class="line1">Aprende</span>
+      <span class="line2">Git & GitHub</span>
+    </h1>
+    <p class="hero-desc">
+      Desde cero hasta colaborar en proyectos reales.<br>
+      Comandos, ramas, commits y flujos de trabajo.
+    </p>
+    <div class="hero-cta">
+      <a href="#intro" class="btn-primary">Empezar →</a>
+      <a href="#terminal" class="btn-ghost">$ abrir terminal</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ════════════════ INTRO ════════════════ -->
+<section id="intro">
+  <div class="section-header">
+    <span class="section-tag">01 / INTRO</span>
+    <h2 class="section-title">¿Qué es Git y GitHub?</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🌳</div>
+      <div class="card-title">Git — Control de versiones</div>
+      <div class="card-body">
+        Git es un sistema de control de versiones distribuido creado por Linus Torvalds (2005). Permite rastrear cambios en el código, revertir errores y trabajar en paralelo sin pisarse entre colaboradores.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🐙</div>
+      <div class="card-title">GitHub — Plataforma remota</div>
+      <div class="card-body">
+        GitHub es una plataforma web que aloja repositorios Git en la nube. Añade herramientas de colaboración: Pull Requests, Issues, Actions (CI/CD), Pages, y más.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Repositorio</div>
+      <div class="card-body">
+        Un repositorio (repo) es la carpeta del proyecto que Git vigila. Contiene todos los archivos y el historial completo de cambios desde el inicio.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Commit</div>
+      <div class="card-body">
+        Un commit es una "foto" del estado del proyecto en un momento dado. Cada commit tiene un ID único (hash SHA-1), un mensaje, autor y fecha.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌿</div>
+      <div class="card-title">Rama (Branch)</div>
+      <div class="card-body">
+        Una rama es una línea de desarrollo independiente. Permite desarrollar features o corregir bugs sin afectar la rama principal (main/master).
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔁</div>
+      <div class="card-title">Merge & Pull Request</div>
+      <div class="card-body">
+        El merge une dos ramas. En GitHub, un Pull Request es la solicitud formal para que tus cambios sean revisados y fusionados al proyecto principal.
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Dato clave:</strong> Git funciona <em>localmente</em> en tu máquina — no necesitas internet para hacer commits. GitHub es el servidor remoto donde sincronizas con <code>push</code> y <code>pull</code>.
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════════════════ FLUJO ════════════════ -->
+<section id="flujo">
+  <div class="section-header">
+    <span class="section-tag">02 / FLUJO</span>
+    <h2 class="section-title">Flujo de trabajo Git</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--text-dim);margin-bottom:2rem;line-height:1.8;">
+    Tus archivos pasan por 4 zonas antes de llegar al repositorio remoto. Entender esto es fundamental.
+  </p>
+
+  <div class="flow-diagram">
+    <div class="flow-node">
+      <div class="flow-box">📁</div>
+      <div class="flow-label">Working<br>Directory</div>
+    </div>
+    <div class="flow-arrow">
+      ────►<br><span class="flow-cmd">git add</span>
+    </div>
+    <div class="flow-node">
+      <div class="flow-box">🗂️</div>
+      <div class="flow-label">Staging<br>Area</div>
+    </div>
+    <div class="flow-arrow">
+      ────►<br><span class="flow-cmd">git commit</span>
+    </div>
+    <div class="flow-node">
+      <div class="flow-box">🏠</div>
+      <div class="flow-label">Local<br>Repo</div>
+    </div>
+    <div class="flow-arrow">
+      ────►<br><span class="flow-cmd">git push</span>
+    </div>
+    <div class="flow-node">
+      <div class="flow-box">☁️</div>
+      <div class="flow-label">Remote<br>(GitHub)</div>
+    </div>
+  </div>
+
+  <div class="terminal-wrapper">
+    <div class="terminal-header">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span class="terminal-title">bash — flujo básico completo</span>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-line"><span class="t-comment"># 1. Inicializar un repositorio nuevo</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/mi-proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git init</span></div>
+      <div class="terminal-line"><span class="t-output">Initialized empty Git repository in /home/user/mi-proyecto/.git/</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># 2. Ver el estado del área de trabajo</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/mi-proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git status</span></div>
+      <div class="terminal-line"><span class="t-warning">On branch main</span></div>
+      <div class="terminal-line"><span class="t-output">Untracked files:</span></div>
+      <div class="terminal-line"><span class="t-error">        README.md</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># 3. Agregar archivos al área de staging</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/mi-proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git add README.md</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># 4. Crear el commit</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/mi-proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git commit -m "docs: add README inicial"</span></div>
+      <div class="terminal-line"><span class="t-success">[main (root-commit) a1b2c3d] docs: add README inicial</span></div>
+      <div class="terminal-line"><span class="t-output"> 1 file changed, 10 insertions(+)</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># 5. Conectar con GitHub y subir</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/mi-proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git remote add origin git@github.com:usuario/mi-proyecto.git</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/mi-proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git push -u origin main</span></div>
+      <div class="terminal-line"><span class="t-success">Branch 'main' set up to track remote branch 'main' from 'origin'.</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════════════════ COMANDOS ════════════════ -->
+<section id="comandos">
+  <div class="section-header">
+    <span class="section-tag">03 / COMANDOS</span>
+    <h2 class="section-title">Referencia de comandos</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(event,'tab-setup')">⚙️ Setup</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-basic')">📌 Básicos</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-branch')">🌿 Ramas</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-remote')">☁️ Remoto</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-history')">📜 Historial</button>
+  </div>
+
+  <!-- SETUP -->
+  <div id="tab-setup" class="tab-content active">
+    <div class="cmd-table-wrap">
+      <div class="cmd-table-title">⚙️ Configuración inicial <span class="tag">git config</span></div>
+      <table class="cmd-table">
+        <tr><th>Comando</th><th>Descripción</th></tr>
+        <tr><td>git config --global user.name "Tu Nombre"</td><td>Establece tu nombre de usuario globalmente</td></tr>
+        <tr><td>git config --global user.email "tu@email.com"</td><td>Establece tu email globalmente</td></tr>
+        <tr><td>git config --global core.editor "code --wait"</td><td>Configura VS Code como editor por defecto</td></tr>
+        <tr><td>git config --list</td><td>Muestra toda la configuración actual</td></tr>
+        <tr><td>git init</td><td>Inicializa un repositorio Git nuevo en la carpeta actual</td></tr>
+        <tr><td>git clone &lt;url&gt;</td><td>Clona un repositorio remoto en tu máquina</td></tr>
+        <tr><td>git clone &lt;url&gt; mi-carpeta</td><td>Clona en una carpeta con nombre personalizado</td></tr>
+      </table>
+    </div>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">bash — configuración inicial</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ git config --global user.name "Ana Pérez"</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ git config --global user.email "ana@example.com"</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ git config --list</span></div>
+        <div class="terminal-line"><span class="t-output">user.name=Ana Pérez</span></div>
+        <div class="terminal-line"><span class="t-output">user.email=ana@example.com</span></div>
+        <div class="terminal-line"><span class="t-output">core.editor=code --wait</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BÁSICOS -->
+  <div id="tab-basic" class="tab-content">
+    <div class="cmd-table-wrap">
+      <div class="cmd-table-title">📌 Comandos básicos del día a día</div>
+      <table class="cmd-table">
+        <tr><th>Comando</th><th>Descripción</th></tr>
+        <tr><td>git status</td><td>Ver el estado de los archivos (staged, modified, untracked)</td></tr>
+        <tr><td>git add &lt;archivo&gt;</td><td>Agregar un archivo al área de staging</td></tr>
+        <tr><td>git add .</td><td>Agregar todos los cambios al staging</td></tr>
+        <tr><td>git add -p</td><td>Agregar cambios de forma interactiva (chunk por chunk)</td></tr>
+        <tr><td>git commit -m "mensaje"</td><td>Crear un commit con mensaje corto</td></tr>
+        <tr><td>git commit -am "mensaje"</td><td>Add + commit en un solo paso (solo archivos tracked)</td></tr>
+        <tr><td>git commit --amend</td><td>Modificar el último commit (mensaje o archivos)</td></tr>
+        <tr><td>git diff</td><td>Ver cambios no agregados al staging</td></tr>
+        <tr><td>git diff --staged</td><td>Ver cambios que ya están en el staging</td></tr>
+        <tr><td>git restore &lt;archivo&gt;</td><td>Descartar cambios en working directory</td></tr>
+        <tr><td>git restore --staged &lt;archivo&gt;</td><td>Sacar un archivo del staging (sin perder cambios)</td></tr>
+        <tr><td>git stash</td><td>Guardar cambios temporalmente sin commitear</td></tr>
+        <tr><td>git stash pop</td><td>Recuperar los cambios guardados con stash</td></tr>
+      </table>
+    </div>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">bash — flujo de commit</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git status</span></div>
+        <div class="terminal-line"><span class="t-warning">modified:   src/app.py</span></div>
+        <div class="terminal-line"><span class="t-error">Untracked:  src/utils.py</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git add .</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git commit -m "feat: add utils module and update app"</span></div>
+        <div class="terminal-line"><span class="t-success">[main 4f2a1b9] feat: add utils module and update app</span></div>
+        <div class="terminal-line"><span class="t-output"> 2 files changed, 47 insertions(+), 3 deletions(-)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAMAS -->
+  <div id="tab-branch" class="tab-content">
+    <div class="cmd-table-wrap">
+      <div class="cmd-table-title">🌿 Manejo de ramas <span class="tag">branch / checkout / merge</span></div>
+      <table class="cmd-table">
+        <tr><th>Comando</th><th>Descripción</th></tr>
+        <tr><td>git branch</td><td>Listar ramas locales (la actual en verde)</td></tr>
+        <tr><td>git branch -a</td><td>Listar ramas locales y remotas</td></tr>
+        <tr><td>git branch &lt;nombre&gt;</td><td>Crear una nueva rama</td></tr>
+        <tr><td>git switch &lt;rama&gt;</td><td>Cambiar a una rama existente</td></tr>
+        <tr><td>git switch -c &lt;rama&gt;</td><td>Crear y cambiar a una nueva rama</td></tr>
+        <tr><td>git merge &lt;rama&gt;</td><td>Fusionar una rama en la rama actual</td></tr>
+        <tr><td>git merge --no-ff &lt;rama&gt;</td><td>Merge conservando el historial de la rama</td></tr>
+        <tr><td>git branch -d &lt;rama&gt;</td><td>Eliminar una rama local (solo si ya fue mergeada)</td></tr>
+        <tr><td>git branch -D &lt;rama&gt;</td><td>Eliminar una rama local forzosamente</td></tr>
+        <tr><td>git rebase &lt;rama&gt;</td><td>Rebase: reescribe el historial sobre otra rama</td></tr>
+        <tr><td>git cherry-pick &lt;hash&gt;</td><td>Aplicar un commit específico a la rama actual</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- REMOTO -->
+  <div id="tab-remote" class="tab-content">
+    <div class="cmd-table-wrap">
+      <div class="cmd-table-title">☁️ Repositorio remoto <span class="tag">remote / push / pull / fetch</span></div>
+      <table class="cmd-table">
+        <tr><th>Comando</th><th>Descripción</th></tr>
+        <tr><td>git remote -v</td><td>Ver los remotos configurados y sus URLs</td></tr>
+        <tr><td>git remote add origin &lt;url&gt;</td><td>Agregar un remoto llamado "origin"</td></tr>
+        <tr><td>git push origin &lt;rama&gt;</td><td>Subir una rama al remoto</td></tr>
+        <tr><td>git push -u origin &lt;rama&gt;</td><td>Subir y configurar seguimiento automático</td></tr>
+        <tr><td>git push --force-with-lease</td><td>Forzar push de forma segura (verifica que nadie más haya subido)</td></tr>
+        <tr><td>git pull</td><td>Fetch + merge: bajar y fusionar cambios remotos</td></tr>
+        <tr><td>git pull --rebase</td><td>Fetch + rebase en vez de merge</td></tr>
+        <tr><td>git fetch origin</td><td>Solo bajar los datos, sin fusionar</td></tr>
+        <tr><td>git push origin --delete &lt;rama&gt;</td><td>Eliminar una rama remota</td></tr>
+      </table>
+    </div>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">bash — sincronización remoto</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git fetch origin</span></div>
+        <div class="terminal-line"><span class="t-output">From github.com:usuario/proyecto</span></div>
+        <div class="terminal-line"><span class="t-output">   a1b2c3d..f4e5d6c  main -> origin/main</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git pull --rebase</span></div>
+        <div class="terminal-line"><span class="t-success">Successfully rebased and updated refs/heads/main.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORIAL -->
+  <div id="tab-history" class="tab-content">
+    <div class="cmd-table-wrap">
+      <div class="cmd-table-title">📜 Historial y deshacer <span class="tag">log / reset / revert</span></div>
+      <table class="cmd-table">
+        <tr><th>Comando</th><th>Descripción</th></tr>
+        <tr><td>git log</td><td>Ver historial completo de commits</td></tr>
+        <tr><td>git log --oneline</td><td>Historial en formato compacto (una línea por commit)</td></tr>
+        <tr><td>git log --oneline --graph --all</td><td>Historial con árbol visual de ramas</td></tr>
+        <tr><td>git log --author="nombre"</td><td>Filtrar commits por autor</td></tr>
+        <tr><td>git show &lt;hash&gt;</td><td>Ver los cambios de un commit específico</td></tr>
+        <tr><td>git reset --soft HEAD~1</td><td>Deshacer el último commit, conservar cambios en staging</td></tr>
+        <tr><td>git reset --mixed HEAD~1</td><td>Deshacer el último commit, conservar cambios sin staging</td></tr>
+        <tr><td>git reset --hard HEAD~1</td><td>⚠️ Deshacer el último commit y BORRAR los cambios</td></tr>
+        <tr><td>git revert &lt;hash&gt;</td><td>Crear un commit que deshace otro (seguro para historial compartido)</td></tr>
+        <tr><td>git blame &lt;archivo&gt;</td><td>Ver quién modificó cada línea de un archivo</td></tr>
+        <tr><td>git bisect start</td><td>Iniciar búsqueda binaria de un bug en el historial</td></tr>
+      </table>
+    </div>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">bash — explorar historial</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git log --oneline --graph --all</span></div>
+        <div class="terminal-line"><span class="t-success">* f4e5d6c (HEAD -> main, origin/main) fix: corregir login</span></div>
+        <div class="terminal-line"><span class="t-success">| * 8a9b0c1 (feature/registro) feat: formulario de registro</span></div>
+        <div class="terminal-line"><span class="t-success">|/</span></div>
+        <div class="terminal-line"><span class="t-success">* a1b2c3d docs: actualizar README</span></div>
+        <div class="terminal-line"><span class="t-success">* 9z8y7x6 init: proyecto inicial</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════════════════ RAMAS ════════════════ -->
+<section id="ramas">
+  <div class="section-header">
+    <span class="section-tag">04 / RAMAS</span>
+    <h2 class="section-title">Trabajo con ramas</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--text-dim);margin-bottom:2rem;line-height:1.8;">
+    Las ramas permiten desarrollar en paralelo. El flujo estándar: crear rama → desarrollar → merge a main.
+  </p>
+
+  <div class="branch-viz">
+    <div class="branch-line"><span class="bc-label">main     </span><span class="bc-commit">●</span><span class="bc-main">───────────────────────────</span><span class="bc-merge">●</span><span class="bc-main">──</span><span class="bc-commit">●</span> <span class="bc-tag">← HEAD</span></div>
+    <div class="branch-line"><span class="bc-label">         </span><span class="bc-main">              </span><span class="bc-feature">\                        /</span></div>
+    <div class="branch-line"><span class="bc-label">feature/ </span><span class="bc-main">               </span><span class="bc-commit">●</span><span class="bc-feature">──────</span><span class="bc-commit">●</span><span class="bc-feature">──────</span><span class="bc-commit">●</span></div>
+    <div class="branch-line"></div>
+    <div class="branch-line"><span class="bc-label">         </span><span class="bc-commit">●</span> <span class="bc-label">= commit</span>   <span class="bc-merge">●</span> <span class="bc-label">= merge commit</span>   <span class="bc-tag">← HEAD</span> <span class="bc-label">= posición actual</span></div>
+  </div>
+
+  <div class="terminal-wrapper" style="margin-top:2rem;">
+    <div class="terminal-header">
+      <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+      <span class="terminal-title">bash — ciclo completo de rama</span>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-line"><span class="t-comment"># Crear y cambiar a la nueva rama</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git switch -c feature/login</span></div>
+      <div class="terminal-line"><span class="t-success">Switched to a new branch 'feature/login'</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># Desarrollar y commitear</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (feature/login)</span><span class="t-cmd"> $ git add src/login.py</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (feature/login)</span><span class="t-cmd"> $ git commit -m "feat: implement login endpoint"</span></div>
+      <div class="terminal-line"><span class="t-success">[feature/login 3d4e5f6] feat: implement login endpoint</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># Subir la rama al remoto</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (feature/login)</span><span class="t-cmd"> $ git push -u origin feature/login</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># Volver a main y hacer merge</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (feature/login)</span><span class="t-cmd"> $ git switch main</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git merge feature/login --no-ff -m "merge: feature/login"</span></div>
+      <div class="terminal-line"><span class="t-success">Merge made by the 'ort' strategy.</span></div>
+      <div class="t-blank"></div>
+      <div class="terminal-line"><span class="t-comment"># Eliminar la rama local ya mergeada</span></div>
+      <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git branch -d feature/login</span></div>
+      <div class="terminal-line"><span class="t-success">Deleted branch feature/login (was 3d4e5f6).</span></div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:2rem;">
+    <strong>Convención de nombres de ramas:</strong><br>
+    <code>feature/nombre-feature</code> — nuevas funcionalidades<br>
+    <code>fix/nombre-bug</code> — corrección de errores<br>
+    <code>hotfix/nombre</code> — corrección urgente en producción<br>
+    <code>docs/nombre</code> — cambios en documentación<br>
+    <code>refactor/nombre</code> — reestructuración de código
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════════════════ COLABORACIÓN ════════════════ -->
+<section id="colaboracion">
+  <div class="section-header">
+    <span class="section-tag">05 / COLABORACIÓN</span>
+    <h2 class="section-title">GitHub: trabajo en equipo</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(event,'tab-pr')">🔀 Pull Request</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-fork')">🍴 Fork</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-conflict')">⚠️ Conflictos</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-ssh')">🔑 SSH</button>
+  </div>
+
+  <!-- PR -->
+  <div id="tab-pr" class="tab-content active">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.8;">
+      Un Pull Request (PR) es la forma estándar de proponer cambios en GitHub. Permite revisión de código antes de hacer merge.
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Crear una rama y hacer commits</div>
+          <div class="step-body">Trabaja en tu feature en una rama separada, nunca directamente en main.
+            <br><span class="step-cmd">git switch -c feature/mi-feature</span>
+            <span class="step-cmd">git commit -m "feat: ..."</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Subir la rama a GitHub</div>
+          <div class="step-body">Sube tu rama al repositorio remoto para que sea visible en GitHub.
+            <br><span class="step-cmd">git push -u origin feature/mi-feature</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Abrir el Pull Request en GitHub</div>
+          <div class="step-body">En GitHub, ve a tu repo → "Compare & pull request". Escribe un título descriptivo y una descripción explicando qué cambiaste y por qué.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Revisión de código (Code Review)</div>
+          <div class="step-body">Los colaboradores revisan el código, dejan comentarios y pueden pedir cambios. Responde a los comentarios y haz los ajustes necesarios con nuevos commits.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-title">Merge del Pull Request</div>
+          <div class="step-body">Una vez aprobado, se hace el merge a main. Se puede usar "Squash and merge" para limpiar el historial o "Merge commit" para conservarlo todo.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <div class="step-title">Actualizar tu local</div>
+          <div class="step-body">Después del merge, actualiza tu rama main local.
+            <br><span class="step-cmd">git switch main</span>
+            <span class="step-cmd">git pull</span>
+            <span class="step-cmd">git branch -d feature/mi-feature</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORK -->
+  <div id="tab-fork" class="tab-content">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.8;">
+      El fork es para contribuir a repositorios donde NO tienes acceso directo (proyectos de terceros o open source).
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Hacer Fork del repositorio</div>
+          <div class="step-body">En GitHub, presiona el botón "Fork" en el repositorio original. Esto crea una copia tuya en tu cuenta.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Clonar TU fork</div>
+          <div class="step-body">
+            <span class="step-cmd">git clone git@github.com:TU_USUARIO/repo-forkeado.git</span>
+            <span class="step-cmd">cd repo-forkeado</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Agregar el remoto original (upstream)</div>
+          <div class="step-body">
+            <span class="step-cmd">git remote add upstream git@github.com:ORIGINAL/repo.git</span>
+            <span class="step-cmd">git remote -v</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Desarrollar en una rama y hacer push</div>
+          <div class="step-body">
+            <span class="step-cmd">git switch -c fix/mi-corrección</span>
+            <span class="step-cmd">git push origin fix/mi-corrección</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-title">Abrir PR desde tu fork al original</div>
+          <div class="step-body">En GitHub, en tu fork aparecerá un botón para "Compare & pull request" hacia el repo original.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <div class="step-title">Sincronizar con el upstream</div>
+          <div class="step-body">
+            <span class="step-cmd">git fetch upstream</span>
+            <span class="step-cmd">git switch main</span>
+            <span class="step-cmd">git merge upstream/main</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFLICTOS -->
+  <div id="tab-conflict" class="tab-content">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.8;">
+      Un conflicto ocurre cuando dos personas modificaron la misma línea del mismo archivo. Git no puede decidir solo cuál es la correcta.
+    </p>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">bash — resolver conflicto de merge</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main)</span><span class="t-cmd"> $ git merge feature/login</span></div>
+        <div class="terminal-line"><span class="t-error">CONFLICT (content): Merge conflict in src/app.py</span></div>
+        <div class="terminal-line"><span class="t-error">Automatic merge failed; fix conflicts and then commit the result.</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-comment"># El archivo tendrá marcadores de conflicto:</span></div>
+        <div class="terminal-line"><span class="t-comment"># <<<<<<< HEAD</span></div>
+        <div class="terminal-line"><span class="t-comment"># código de TU rama</span></div>
+        <div class="terminal-line"><span class="t-comment"># =======</span></div>
+        <div class="terminal-line"><span class="t-comment"># código de la otra rama</span></div>
+        <div class="terminal-line"><span class="t-comment"># >>>>>>> feature/login</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-comment"># Edita el archivo, elimina los marcadores, deja el código correcto</span></div>
+        <div class="terminal-line"><span class="t-comment"># Luego:</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main|MERGING)</span><span class="t-cmd"> $ git add src/app.py</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~/proyecto</span><span class="t-branch"> (main|MERGING)</span><span class="t-cmd"> $ git commit -m "merge: resolver conflicto en app.py"</span></div>
+        <div class="terminal-line"><span class="t-success">[main 7g8h9i0] merge: resolver conflicto en app.py</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SSH -->
+  <div id="tab-ssh" class="tab-content">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.8;">
+      SSH permite conectarte a GitHub sin escribir usuario/contraseña en cada push.
+    </p>
+    <div class="terminal-wrapper">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">bash — configurar SSH con GitHub</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-comment"># 1. Generar clave SSH</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ ssh-keygen -t ed25519 -C "tu@email.com"</span></div>
+        <div class="terminal-line"><span class="t-output">Generating public/private ed25519 key pair.</span></div>
+        <div class="terminal-line"><span class="t-output">Enter file in which to save the key: [Enter]</span></div>
+        <div class="terminal-line"><span class="t-output">Enter passphrase (optional): [Enter]</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-comment"># 2. Copiar la clave pública</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ cat ~/.ssh/id_ed25519.pub</span></div>
+        <div class="terminal-line"><span class="t-accent">ssh-ed25519 AAAAC3NzaC1lZDI... tu@email.com</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-comment"># 3. Ve a GitHub → Settings → SSH Keys → New SSH Key</span></div>
+        <div class="terminal-line"><span class="t-comment">#    Pega la clave pública ahí</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-comment"># 4. Verificar conexión</span></div>
+        <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ ssh -T git@github.com</span></div>
+        <div class="terminal-line"><span class="t-success">Hi usuario! You've successfully authenticated, but GitHub does not provide shell access.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ════════════════ TERMINAL INTERACTIVA ════════════════ -->
+<section id="terminal">
+  <div class="section-header">
+    <span class="section-tag">06 / PRÁCTICA</span>
+    <h2 class="section-title">Terminal interactiva</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.8;">
+    Simula comandos Git directamente aquí. Escribe un comando o usa los botones de acceso rápido.
+  </p>
+
+  <div class="interactive-terminal">
+    <div class="terminal-header">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span class="terminal-title">▶ git simulator — escribe un comando</span>
+    </div>
+    <div class="terminal-output" id="termOutput"></div>
+    <div class="terminal-input-row">
+      <span class="terminal-prompt-label">user@git-sim:~/repo (main) $</span>
+      <input type="text" id="termInput" placeholder="git status" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <div class="cmd-buttons" id="cmdButtons"></div>
+  <div class="terminal-hint">💡 Prueba: <code>git init</code> → <code>git status</code> → <code>git add .</code> → <code>git commit -m "mensaje"</code> → <code>help</code></div>
+</section>
+</main>
+<footer>
+  Guía de <span>Git & GitHub</span> · Hecha con 🖤 para aprender control de versiones
+</footer>
+
+<script src="script.js"></script>  
+</body>
+</html>
