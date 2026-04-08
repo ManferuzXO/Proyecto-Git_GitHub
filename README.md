@@ -45,9 +45,9 @@ Ideal para:
 
 ## ✨ Características
 
-- **Guía completa en 6 secciones** — desde conceptos básicos hasta SSH y resolución de conflictos
+- **Guía completa en 6 secciones** — desde conceptos básicos hasta SSH, conflictos y CI/CD
 - **Terminal interactiva simulada** — practica comandos Git reales sin instalar nada
-- **Navegación por pestañas** — accede rápidamente a Pull Requests, Forks, Conflictos y SSH
+- **Navegación por pestañas** — accede rápidamente a Pull Requests, Forks, Conflictos, SSH y CI/CD
 - **Diagramas de flujo visuales** — entiende el ciclo Working Directory → Staging → Local Repo → Remote
 - **Diseño responsive** — funciona en escritorio, tablet y móvil
 - **Menú hamburguesa** — navegación móvil optimizada
@@ -145,6 +145,7 @@ Flujos de trabajo en equipo con pestañas navegables:
 - **Fork** — contribuir a proyectos donde no tienes acceso directo
 - **Conflictos** — cómo detectar y resolver conflictos de merge
 - **SSH** — configurar autenticación por clave SSH con GitHub
+- **CI/CD** — automatizar tests y despliegues con GitHub Actions
 
 ### 06 · Terminal interactiva
 Simulador de Git en el navegador para practicar sin riesgo.

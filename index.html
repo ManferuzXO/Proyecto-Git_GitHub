@@ -439,6 +439,7 @@
     <button class="tab-btn" onclick="switchTab(event,'tab-fork')">🍴 Fork</button>
     <button class="tab-btn" onclick="switchTab(event,'tab-conflict')">⚠️ Conflictos</button>
     <button class="tab-btn" onclick="switchTab(event,'tab-ssh')">🔑 SSH</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-cicd')">🚀 CI/CD</button>
   </div>
 
   <!-- PR -->
@@ -624,6 +625,114 @@
         <div class="terminal-line"><span class="t-prompt">user@pc</span><span class="t-path">:~</span><span class="t-cmd"> $ ssh -T git@github.com</span></div>
         <div class="terminal-line"><span class="t-success">Hi usuario! You've successfully authenticated, but GitHub does not provide shell access.</span></div>
       </div>
+    </div>
+  </div>
+
+  <!-- CI/CD -->
+  <div id="tab-cicd" class="tab-content">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.8;">
+      GitHub Actions permite automatizar tareas como ejecutar tests, builds y despliegues cada vez que subes código.
+    </p>
+
+    <div class="flow-diagram" style="margin-bottom:2rem;">
+      <div class="flow-node">
+        <div class="flow-box">📝</div>
+        <div class="flow-label">Push a<br>GitHub</div>
+      </div>
+      <div class="flow-arrow">
+        ────►<br><span class="flow-cmd">trigger</span>
+      </div>
+      <div class="flow-node">
+        <div class="flow-box">⚙️</div>
+        <div class="flow-label">GitHub<br>Actions</div>
+      </div>
+      <div class="flow-arrow">
+        ────►<br><span class="flow-cmd">run jobs</span>
+      </div>
+      <div class="flow-node">
+        <div class="flow-box">✅</div>
+        <div class="flow-label">Tests /<br>Build</div>
+      </div>
+      <div class="flow-arrow">
+        ────►<br><span class="flow-cmd">deploy</span>
+      </div>
+      <div class="flow-node">
+        <div class="flow-box">🌐</div>
+        <div class="flow-label">Production</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Crear carpeta .github/workflows</div>
+          <div class="step-body">En tu repositorio, crea la carpeta para los workflows de Actions.
+            <br><span class="step-cmd">mkdir -p .github/workflows</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Crear archivo workflow.yml</div>
+          <div class="step-body">Crea un archivo YAML con la configuración del workflow.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Definir triggers y jobs</div>
+          <div class="step-body">Especifica cuándo ejecutar (push, pull request) y qué hacer (instalar dependencias, ejecutar tests).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Hacer commit y push</div>
+          <div class="step-body">Sube el workflow a GitHub para activarlo.
+            <br><span class="step-cmd">git add .github/workflows/</span>
+            <span class="step-cmd">git commit -m "ci: add GitHub Actions workflow"</span>
+            <span class="step-cmd">git push</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="terminal-wrapper" style="margin-top:2rem;">
+      <div class="terminal-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="terminal-title">yaml — ejemplo de workflow básico</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="t-comment"># Archivo: .github/workflows/ci.yml</span></div>
+        <div class="terminal-line"><span class="t-accent">name: CI</span></div>
+        <div class="terminal-line"><span class="t-accent">on:</span></div>
+        <div class="terminal-line"><span class="t-accent">  push:</span></div>
+        <div class="terminal-line"><span class="t-accent">    branches: [ main ]</span></div>
+        <div class="terminal-line"><span class="t-accent">  pull_request:</span></div>
+        <div class="terminal-line"><span class="t-accent">    branches: [ main ]</span></div>
+        <div class="t-blank"></div>
+        <div class="terminal-line"><span class="t-accent">jobs:</span></div>
+        <div class="terminal-line"><span class="t-accent">  test:</span></div>
+        <div class="terminal-line"><span class="t-accent">    runs-on: ubuntu-latest</span></div>
+        <div class="terminal-line"><span class="t-accent">    steps:</span></div>
+        <div class="terminal-line"><span class="t-accent">    - uses: actions/checkout@v4</span></div>
+        <div class="terminal-line"><span class="t-accent">    - name: Set up Python</span></div>
+        <div class="terminal-line"><span class="t-accent">      uses: actions/setup-python@v4</span></div>
+        <div class="terminal-line"><span class="t-accent">      with:</span></div>
+        <div class="terminal-line"><span class="t-accent">        python-version: '3.9'</span></div>
+        <div class="terminal-line"><span class="t-accent">    - name: Install dependencies</span></div>
+        <div class="terminal-line"><span class="t-accent">      run: pip install -r requirements.txt</span></div>
+        <div class="terminal-line"><span class="t-accent">    - name: Run tests</span></div>
+        <div class="terminal-line"><span class="t-accent">      run: python -m pytest</span></div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:2rem;">
+      <strong>¿Qué hace este workflow?</strong><br>
+      Se ejecuta en cada push/PR a main, instala Python, dependencias y corre tests automáticamente.<br>
+      <strong>Beneficios:</strong> Detecta errores temprano, asegura calidad del código, automatiza despliegues.
     </div>
   </div>
 </section>
